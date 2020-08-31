@@ -38,11 +38,11 @@ function sortProducts(criteria, array){
     return result;
 }
 
-function showProductsList(array){
+function showProductsList(){
 
     let htmlContentToAppend = "";
-    for(let i = 0; i < array.length; i++){
-        let product = array[i];
+    for(let i = 0; i < currentProductsArray.length; i++){
+        let product = currentProductsArray[i];
 
         if (((minCount == undefined) || (minCount != undefined && parseInt(product.cost) >= minCount)) &&
             ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))){
@@ -58,7 +58,7 @@ function showProductsList(array){
                             <h4 class="mb-1">`+ product.name +`</h4>
                             <h4 class="mb-1">` + product.cost + `</h4>
                             <h4 class="mb-1">` + product.currency + ` </h4>
-                            <small class="text-muted">` + product.soldCount + ` artículos</small>
+                            <small class="text-muted">` + product.soldCount + ` vendidos </small>
                         </div>
                         <p class="mb-1">` + product.description + `</p>
                     </div>
@@ -70,8 +70,19 @@ function showProductsList(array){
         document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
     }
 }
-let filteredArray = [];
 
+function sortAndShowProducts(sortCriteria, ProductsArray){
+    currentSortCriteria = sortCriteria;
+
+    if(ProductsArray != undefined){
+        currentProductsArray = ProductsArray;
+    }
+
+    currentProductsArray = sortProducts(currentSortCriteria, currentProductsArray);
+
+    //Muestro las categorías ordenadas
+    showProductsList();
+}
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
@@ -79,43 +90,20 @@ let filteredArray = [];
 document.addEventListener("DOMContentLoaded", function(e){
     getJSONData(PRODUCTS_URL).then(function(resultObj){
         if (resultObj.status === "ok"){
-            currentProductsArray = resultObj.data;
-            currentProductsArray = sortProducts(ORDER_ASC_BY_COST, currentProductsArray);
-            filteredArray = currentProductsArray
-            showProductsList(currentProductsArray)
+            sortAndShowProducts(ORDER_ASC_BY_COST, resultObj.data);
         }
     });
 
-    const searchBar = document.getElementById('searchBar');
-
-    searchBar.onkeyup = () => {
-        let searchString = searchBar.value.toLowerCase();
-        filteredArray = currentProductsArray.filter(item => {
-            return item.name.toLowerCase().indexOf(searchString) > -1 || item.description.toLowerCase().indexOf(searchString) > -1;
-        
-        
-        
-        });
-
-        showProductsList(filteredArray);
-
-    }
     document.getElementById("sortAsc").addEventListener("click", function(){
-        filteredArray = sortProducts(ORDER_ASC_BY_COST, filteredArray);
-
-        showProductsList(filteredArray);
+        sortAndShowProducts(ORDER_ASC_BY_COST);
     });
 
     document.getElementById("sortDesc").addEventListener("click", function(){
-        filteredArray = sortProducts(ORDER_DESC_BY_COST, filteredArray);
-
-        showProductsList(filteredArray);
+        sortAndShowProducts(ORDER_DESC_BY_COST);
     });
 
     document.getElementById("sortByCount").addEventListener("click", function(){
-        filteredArray = sortProducts(ORDER_BY_SOLD_COUNT, filteredArray);
-
-        showProductsList(filteredArray);
+        sortAndShowProducts(ORDER_BY_SOLD_COUNT);
     });
 
     document.getElementById("clearRangeFilter").addEventListener("click", function(){
@@ -125,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         minCount = undefined;
         maxCount = undefined;
 
-        showProductsList(filteredArray);
+        showProductsList();
     });
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
@@ -148,6 +136,6 @@ document.addEventListener("DOMContentLoaded", function(e){
             maxCount = undefined;
         }
 
-        showProductsList(filteredArray);
+        showProductsList();
     });
 });
