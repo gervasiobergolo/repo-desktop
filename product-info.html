@@ -34,36 +34,27 @@
         <p class="small alert-warning py-3"><strong>Nota: </strong>por simplicidad, cualquiera sea el producto
           seleccionado previamente, siempre se visualizará el presente: <strong>Chevrolet Onix Joy</strong>.</p>
       </div>
-      <h3 id="infoName"></h3>
-      <hr class="my-3">
-      <dl>
-        <dt>Precio</dt>
-
-          <p id="infoCost"></p><p id="infoCurrency"></p>
-        </dd>
-        <dt>Descripción</dt>
-        <dd>
-          <p id="infoDescription"></p>
-        </dd>
-
-        <dt>Categoría</dt>
-        <dd>
-          <p id="infoCategory"></p>
-        </dd>
-
-        <dt>Cantidad de vendidos</dt>
-        <dd>
-          <p id="infoSoldCount"></p>
-        </dd>
-        
-
-        <dt>Imágenes ilustrativas</dt>
-        <dd>
-          <div class="row text-center text-lg-left pt-2" id="imagesGallery">
-          </div>
-        </dd>
-      </dl>
-      <a type="button" class="btn btn-light btn-lg btn-block" href="products.html">Ver productos</a>
+      <div class="container">
+        <div class="row text-center text-lg-left pt-2" id="productInfo"></div>
+        <div class="row text-center text-lg-left pt-2" id="productComments"></div>
+        <span onmouseover="starmark(this)" onclick="starmark(this)" id="1one" style="font-size: 40px; cursor: pointer"
+          class="fa fa-star checked"></span>
+        <span onmouseover="starmark(this)" onclick="starmark(this)" id="2one" style="font-size: 40px; cursor: pointer"
+          class="fa fa-star"></span>
+        <span onmouseover="starmark(this)" onclick="starmark(this)" id="3one" style="font-size: 40px; cursor: pointer"
+          class="fa fa-star"></span>
+        <span onmouseover="starmark(this)" onclick="starmark(this)" id="4one" style="font-size: 40px; cursor: pointer"
+          class="fa fa-star"></span>
+        <span onmouseover="starmark(this)" onclick="starmark(this)" id="5one" style="font-size: 40px; cursor: pointer"
+          class="fa fa-star"></span>
+        <br/>
+        <div id = "newCommentContent" style="display: none"> </div>
+        <textarea style="margin-top: 5px" class="form-control" rows="3" id="textoComentario"
+          placeholder="Escribir aqui su comentario "></textarea>
+          <button class="btn btn-lg btn-primary mb-5" id="botonEnviar">Enviar</button>
+      </div>
+    </div>
+    <a type="button" class="btn btn-light btn-lg btn-block" href="products.html">Ver productos</a>
     </div>
   </main>
   <!--<div class="container p-5">
