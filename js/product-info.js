@@ -1,6 +1,3 @@
-var count;
-var category = {};
-
 function showProductsList(array, images) {
 
   let htmlContentToAppend = "";
@@ -102,63 +99,34 @@ document.addEventListener("DOMContentLoaded", function (e) {
     if (resultObj.status === "ok") {
       commentsArray = resultObj.data;
       productImageArray = resultObj.data.images;
+      console.log(commentsArray);
       showComments(commentsArray);
     }
   });
 });
 
-function starmark(item) {
-  count = item.id[0];
-  sessionStorage.starRating = count;
-  var subid = item.id.substring(1);
-  for (var i = 0; i < 5; i++) {
-    if (i < count) {
-      document.getElementById(i + 1 + subid).style.color = "orange";
-    } else {
-      document.getElementById(i + 1 + subid).style.color = "black";
-    }
+const newComment_input = document.getElementById("newComment");
+newComment_input.onsubmit = function (e) {
+  e.preventDefault();
+  let newScore = parseInt(document.querySelector('input[name="newScore"]:checked').value);
+  let now = new Date();
+  var datos = {
+    dateTime: 'Hora',
+    description: 'Descripcion',
+    score: '1',
+    user: 'Usuario'
+
   }
+
+  datos.description = document.getElementById("textArea").value;
+  datos.user = localStorage.getItem('email');
+  datos.dateTime = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + "  " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+  datos.score = newScore;
+
+  console.log(datos.score);
+
+  commentsArray.push(datos);
+  showComments(commentsArray);
+  console.log(commentsArray);
+
 }
-document.addEventListener("DOMContentLoaded", function (e) {
-  let UserLogged = localStorage.getItem('email')
-  if (UserLogged) {
-    document.getElementById("newCommentContent").style = "display: inline-block"
-  }
-  document.addEventListener("DOMContentLoaded", function (e) {
-    getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
-      if (resultObj.status === "ok") {
-        productInfoArray = resultObj.data;
-        productImageArray = resultObj.data.images;
-        showProductsList(productInfoArray, productImageArray);
-
-      }
-    });
-    getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
-      if (resultObj.status === "ok") {
-        commentsArray = resultObj.data;
-        productImageArray = resultObj.data.images;
-        showComments(commentsArray);
-      }
-    });
-
-    document.getElementById("botonEnviar").addEventListener('click', () => {
-
-      let now = new Date();
-      let tiempo = ` ${now.getFullYear()} - ${now.getMonth() + 1} - ${now.getDate()}  `;
-      tiempo += `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()} `;
-
-      let newComment = {
-        score: parseInt(count),
-        dateTime: tiempo,
-        description: document.getElementById("textoComentario").value,
-        user: JSON.parse(localStorage.getItem('User')).user
-      }
-      commentsArray.push(newComment);
-      showComments(array)
-      console.log;
-      showProductsList(productInfoArray, productImageArray);
-      description.value = "";
-      console.log();
-    })
-  })
-})
