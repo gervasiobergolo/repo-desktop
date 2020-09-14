@@ -37,21 +37,35 @@
       <div class="container">
         <div class="row text-center text-lg-left pt-2" id="productInfo"></div>
         <div class="row text-center text-lg-left pt-2" id="productComments"></div>
-        <span onmouseover="starmark(this)" onclick="starmark(this)" id="1one" style="font-size: 40px; cursor: pointer"
-          class="fa fa-star checked"></span>
-        <span onmouseover="starmark(this)" onclick="starmark(this)" id="2one" style="font-size: 40px; cursor: pointer"
-          class="fa fa-star"></span>
-        <span onmouseover="starmark(this)" onclick="starmark(this)" id="3one" style="font-size: 40px; cursor: pointer"
-          class="fa fa-star"></span>
-        <span onmouseover="starmark(this)" onclick="starmark(this)" id="4one" style="font-size: 40px; cursor: pointer"
-          class="fa fa-star"></span>
-        <span onmouseover="starmark(this)" onclick="starmark(this)" id="5one" style="font-size: 40px; cursor: pointer"
-          class="fa fa-star"></span>
-        <br/>
-        <div id = "newCommentContent" style="display: none"> </div>
-        <textarea style="margin-top: 5px" class="form-control" rows="3" id="textoComentario"
-          placeholder="Escribir aqui su comentario "></textarea>
-          <button class="btn btn-lg btn-primary mb-5" id="botonEnviar">Enviar</button>
+        <br />
+        <form id="newComment">
+          <textarea style="margin-top: 5px" class="form-control" rows="3" id="textArea"
+            placeholder="Escribir aqui su comentario "></textarea>
+          <label for="newScore">Calificación:</label>
+          <div class="star-rating mt-0">
+            <input id="star-5" type="radio" name="newScore" value="5" />
+            <label for="star-5" title="5 stars">
+              <i class="active fa fa-star"></i>
+            </label>
+            <input id="star-4" type="radio" name="newScore" value="4" />
+            <label for="star-4" title="4 stars">
+              <i class="active fa fa-star"></i>
+            </label>
+            <input id="star-3" type="radio" name="newScore" value="3" />
+            <label for="star-3" title="3 stars">
+              <i class="active fa fa-star"></i>
+            </label>
+            <input id="star-2" type="radio" name="newScore" value="2" />
+            <label for="star-2" title="2 stars">
+              <i class="active fa fa-star"></i>
+            </label>
+            <input id="star-1" type="radio" name="newScore" value="1" checked />
+            <label for="star-1" title="1 star">
+              <i class="active fa fa-star"></i>
+            </label>
+          </div>
+          <input type="submit" value="Enviar">
+        </form>
       </div>
     </div>
     <a type="button" class="btn btn-light btn-lg btn-block" href="products.html">Ver productos</a>
